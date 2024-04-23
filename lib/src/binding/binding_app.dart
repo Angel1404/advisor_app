@@ -1,15 +1,41 @@
 import 'package:advisor_app/src/presentation/presentation.dart';
-import 'package:get/get.dart';
 
 class InitialBinding implements Bindings {
   @override
-  void dependencies() {}
+  void dependencies() {
+    Get.lazyPut<LoginController>(
+      () => LoginController(
+        usecase: FirebaseServiceUsecase(
+          firebaseAuthService: FirebaseAuthService(),
+          firebaseDBService: FirebaseDBService(),
+        ),
+      ),
+      fenix: true,
+    );
+    //
+    Get.lazyPut<RegisterController>(
+      () => RegisterController(
+        usecase: FirebaseServiceUsecase(
+          firebaseAuthService: FirebaseAuthService(),
+          firebaseDBService: FirebaseDBService(),
+        ),
+      ),
+      fenix: true,
+    );
+  }
 }
 
 class AuthBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
-    Get.lazyPut<RegisterController>(() => RegisterController(), fenix: true);
+    Get.lazyPut<LoginController>(
+      () => LoginController(
+        usecase: FirebaseServiceUsecase(
+          firebaseAuthService: FirebaseAuthService(),
+          firebaseDBService: FirebaseDBService(),
+        ),
+      ),
+      fenix: true,
+    );
   }
 }

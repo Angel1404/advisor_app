@@ -64,12 +64,12 @@ class _RegisterViewState extends State<RegisterView> {
           ),
         )
             .then((addValue) {
-          if (value != "success") {
+          if (addValue != "success") {
             loading.value = false;
             AppDialogs.information(title: "Error", description: addValue ?? "");
           } else {
             loading.value = false;
-            print("success");
+            Get.offAndToNamed(Routes.HOMEVIEW);
           }
         });
       }

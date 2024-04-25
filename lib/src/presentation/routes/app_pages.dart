@@ -1,7 +1,6 @@
-import 'package:get/get.dart';
-
 import '../../binding/binding_app.dart';
 import '../presentation.dart';
+
 part './app_routes.dart';
 
 abstract class AppPages {
@@ -14,6 +13,10 @@ abstract class AppPages {
     GetPage(
       name: Routes.REGISTERVIEW,
       page: () => const RegisterView(),
+    ),
+    GetPage(
+      name: Routes.HOMEVIEW,
+      page: () => const HomeView(),
     ),
   ];
 }

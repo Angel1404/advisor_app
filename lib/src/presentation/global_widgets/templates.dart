@@ -25,12 +25,16 @@ class BodyTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorApp.background,
-        elevation: 0,
-        leading: IconBackAppbar(onPressed: onPressedAppBar),
-        title: AutoSizeTextApp(title: titleAppbar ?? "Crear cuenta", textStyle: StyleText.titleAppbar),
-      ),
+      appBar: isAppbar == false
+          ? null
+          : AppBar(
+              backgroundColor: ColorApp.background,
+              elevation: 0,
+              leading: IconBackAppbar(onPressed: onPressedAppBar),
+              title: AutoSizeTextApp(
+                  title: titleAppbar ?? "Crear cuenta",
+                  textStyle: StyleText.titleAppbar),
+            ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 23),
         height: size.height,
@@ -42,7 +46,10 @@ class BodyTemplate extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: size.height * spacingTop),
-                    SizedBox(width: double.maxFinite, height: size.height * heightBody, child: child),
+                    SizedBox(
+                        width: double.maxFinite,
+                        height: size.height * heightBody,
+                        child: child),
                   ],
                 ),
               )

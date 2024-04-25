@@ -17,8 +17,12 @@ class InputGenery extends StatelessWidget {
     this.onTap,
     this.colorPrefixIcon,
     this.sizePrefixIcon,
+    this.backgroundColor,
+    this.minHeight,
+    this.maxHeight,
+    this.isMultiLinea = false,
   });
-
+  final bool isMultiLinea;
   final bool? obscureText;
   final TextInputType? textInputType;
   final IconData? prefixIcon;
@@ -28,17 +32,22 @@ class InputGenery extends StatelessWidget {
   final Widget? suixIcon;
   final bool isSufixIcon;
   final Color? colorPrefixIcon;
+  final Color? backgroundColor;
   final double? sizePrefixIcon;
-
+  final double? minHeight;
+  final double? maxHeight;
   final TextEditingController? controller;
   final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      constraints: const BoxConstraints(maxHeight: 50, minHeight: 40, maxWidth: 350),
+      constraints: BoxConstraints(
+        maxHeight: maxHeight ?? 50,
+        minHeight: minHeight ?? 40,
+      ),
       decoration: BoxDecoration(
-        color: ColorApp.greyLight,
+        color: backgroundColor ?? ColorApp.greyLight,
         borderRadius: borderRadius5px,
       ),
       child: TextFormField(
@@ -47,14 +56,20 @@ class InputGenery extends StatelessWidget {
         keyboardType: textInputType ?? TextInputType.emailAddress,
         obscureText: obscureText ?? false,
         onTap: onTap,
+        minLines: isMultiLinea == false ? null : 3,
+        maxLines: isMultiLinea == false ? null : 5,
         onChanged: onChanged,
         cursorColor: ColorApp.blue,
         decoration: InputDecoration(
           hintText: hintText ?? 'Correo',
           hintStyle: StyleText.hintStyle,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          prefixIcon: !isPrefixIcon ? null : Icon(prefixIcon ?? Icons.email_outlined, size: sizePrefixIcon ?? 15),
-          prefixIconColor: !isPrefixIcon ? null : colorPrefixIcon ?? ColorApp.blue,
+          prefixIcon: !isPrefixIcon
+              ? null
+              : Icon(prefixIcon ?? Icons.email_outlined,
+                  size: sizePrefixIcon ?? 15),
+          prefixIconColor:
+              !isPrefixIcon ? null : colorPrefixIcon ?? ColorApp.blue,
           suffixIcon: suixIcon,
           border: InputBorder.none,
         ),
@@ -101,7 +116,8 @@ class InputGeneryAmplio extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText ?? 'Correo',
           hintStyle: StyleText.hintStyle,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           border: InputBorder.none,
           suffixIcon: suixIcon,
           label: Text(hintText ?? "Nota", style: StyleText.complementText),
@@ -167,7 +183,9 @@ class _BtnVisualPasswordState extends State<BtnVisualPassword> {
       splashRadius: 20,
       splashColor: ColorApp.blue.withOpacity(.5),
       tooltip: "visualPasswordBtnText",
-      icon: Icon(isOcureText ? Icons.visibility_rounded : Icons.visibility_off_rounded),
+      icon: Icon(isOcureText
+          ? Icons.visibility_rounded
+          : Icons.visibility_off_rounded),
       onPressed: () {
         isOcureText = !isOcureText;
         widget.onValue(isOcureText);

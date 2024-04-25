@@ -4,7 +4,7 @@ import 'colors_app.dart';
 
 class StyleText {
   static const btn = TextStyle(
-    color: ColorApp.black,
+    color: Colors.white,
     fontWeight: FontWeight.normal,
     fontSize: 16,
   );

@@ -1,5 +1,4 @@
 import 'package:advisor_app/src/presentation/presentation.dart';
-import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -57,9 +56,16 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //LOGO
+            const SizedBox(
+              height: 80,
+              width: 80,
+              child: Placeholder(),
+            ),
             const SizedBox(height: 35),
-
+            const Text(
+              "Login",
+              style: StyleText.titleAppbar,
+            ),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -88,7 +94,6 @@ class _LoginViewState extends State<LoginView> {
                 const AutoSizeTextApp(title: "¿Has olvidado tu contraseña?"),
               ],
             ),
-
             BtnApp(
               titleBtn: "Crea una cuenta",
               onPressed: () {

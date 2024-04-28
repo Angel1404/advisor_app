@@ -1,11 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
 
 import '../themes/theme.dart';
 
 //Cargar el paquete -  auto_size_text:
 class AutoSizeTextApp extends StatelessWidget {
-  const AutoSizeTextApp({super.key, required this.title, this.textStyle, this.textAlign, this.minFontSize, this.maxLines, this.fontSize});
+  const AutoSizeTextApp(
+      {super.key,
+      required this.title,
+      this.textStyle,
+      this.textAlign,
+      this.minFontSize,
+      this.maxLines,
+      this.fontSize});
   final String title;
   final TextStyle? textStyle;
   final TextAlign? textAlign;

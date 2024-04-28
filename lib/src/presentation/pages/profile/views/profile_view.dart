@@ -21,6 +21,8 @@ class ProfileView extends StatelessWidget {
           const FormProfileContent(),
           const SizedBox(height: 44),
           BtnApp(
+            width: 100,
+            height: 45,
             onPressed: () {},
             titleBtn: 'Guardar cambios',
           ),

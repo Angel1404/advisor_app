@@ -25,7 +25,6 @@ class FirebaseDBService {
   }
 
   Future<String?> addUserData({required UserModelEntitie user}) async {
-    print("id${user.id}");
     try {
       await users.doc(user.id).set(user.toJson());
       return 'success';

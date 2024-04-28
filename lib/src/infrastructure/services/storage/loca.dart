@@ -20,4 +20,9 @@ class LocalPreferences extends ChangeNotifier {
   }
 
   get getLoginState => _prefs.getBool('logged');
+  set setUserId(String value) {
+    _prefs.setString('user_id', value);
+  }
+
+  get getUserId => _prefs.getString('user_id');
 }

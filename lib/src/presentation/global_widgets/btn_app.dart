@@ -10,16 +10,23 @@ class BtnApp extends StatelessWidget {
     this.onPressed,
     this.titleBtn,
     this.backgroundColor,
+    this.width,
+    this.height,
   });
 
   final String? titleBtn;
   final Function()? onPressed;
   final Color? backgroundColor;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        minimumSize: Size(width ?? 200, height ?? 45),
+      ),
       child: AutoSizeTextApp(
         title: titleBtn ?? "Iniciar sesion",
         maxLines: 1,
@@ -49,7 +56,8 @@ class BtnAppOutline extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorApp.background,
         shape: RoundedRectangleBorder(
-          borderRadius: isBorderRadius ? BorderRadius.circular(8) : BorderRadius.zero,
+          borderRadius:
+              isBorderRadius ? BorderRadius.circular(8) : BorderRadius.zero,
           side: const BorderSide(color: ColorApp.blue),
         ),
       ),

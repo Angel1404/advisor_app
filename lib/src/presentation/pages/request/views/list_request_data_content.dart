@@ -27,9 +27,27 @@ class ListRequestData extends StatelessWidget {
                     "Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,",
                     ColorApp.black),
                 const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: _textInformation("Cliente", ColorApp.black),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const BtnApp(
+                          width: 100,
+                          titleBtn: "Aceptar",
+                        ),
+                        const SizedBox(width: 12),
+                        BtnApp(
+                          width: 100,
+                          backgroundColor: Colors.red,
+                          onPressed: () {},
+                          titleBtn: "Rechazar",
+                        )
+                      ],
+                    ),
+                    _textInformation("Cliente", ColorApp.black),
+                  ],
                 ),
               ],
             ),

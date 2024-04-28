@@ -39,6 +39,7 @@ class _LoginViewState extends State<LoginView> {
       if (value != null && value.error != null) {
         AppDialogs.information(title: "Error", description: value.error ?? "");
       } else {
+        LocalPreferences().setUserId = value!.data!.uid;
         Get.offAndToNamed(Routes.HOMEVIEW);
       }
     });

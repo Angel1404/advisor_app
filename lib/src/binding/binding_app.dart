@@ -25,6 +25,22 @@ class InitialBinding implements Bindings {
   }
 }
 
+class HomeBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<HomeViewController>(
+      () => HomeViewController(
+        usecase: FirebaseServiceUsecase(
+          firebaseAuthService: FirebaseAuthService(),
+          firebaseDBService: FirebaseDBService(),
+        ),
+        preferences: LocalPreferences(),
+      ),
+      fenix: true,
+    );
+  }
+}
+
 class AuthBinding implements Bindings {
   @override
   void dependencies() {

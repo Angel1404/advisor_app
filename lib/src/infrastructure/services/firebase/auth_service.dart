@@ -7,18 +7,19 @@ class FirebaseAuthService {
     required String email,
     required String password,
   }) async {
+    late GenericResponse<User> response;
     try {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         if (value.user != null && value.user!.email != null) {
-          return GenericResponse(data: value.user);
+          response = GenericResponse(data: value.user);
         }
       });
     } on FirebaseAuthException catch (e) {
-      return GenericResponse(error: parseFirebaseAuthException(e));
+      response = GenericResponse(error: parseFirebaseAuthException(e));
     }
-    return null;
+    return response;
   }
 
   Future<GenericResponse<User>?> register({

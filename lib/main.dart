@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      title: "Advisor",
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.LOGINVIEW,
+      initialRoute: Routes.INITIAL,
       theme: themeApp,
       defaultTransition: Transition.fadeIn,
       getPages: AppPages.pages,

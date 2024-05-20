@@ -4,3 +4,5 @@ export 'dialog_app.dart';
 export 'input_genery.dart';
 export 'templates.dart';
 export 'texts_app.dart';
+export 'logo_app_card.dart';
+export 'tabs_widgets.dart';

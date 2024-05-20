@@ -1,68 +1,74 @@
 import 'package:advisor_app/src/presentation/pages/request/request.dart';
 
-class ListRequestData extends StatelessWidget {
+class ListRequestData extends StatefulWidget {
   const ListRequestData({super.key, required this.data});
-  final List<dynamic> data;
+  final List<ServiceProModel> data;
+
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: data.length,
-        itemBuilder: (context, index) {
-          return CardRequestDecoration(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _textInformation("Titulo", ColorApp.black),
-                    _textInformation("Fecha", ColorApp.grey),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _textInformation("Tarifa", ColorApp.black),
-                const SizedBox(height: 12),
-                _textInformation(
-                    "Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,Descripcion,",
-                    ColorApp.black),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const BtnApp(
-                          width: 100,
-                          titleBtn: "Aceptar",
-                        ),
-                        const SizedBox(width: 12),
-                        BtnApp(
-                          width: 100,
-                          backgroundColor: Colors.red,
-                          onPressed: () {},
-                          titleBtn: "Rechazar",
-                        )
-                      ],
-                    ),
-                    _textInformation("Cliente", ColorApp.black),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+  State<ListRequestData> createState() => _ListRequestDataState();
+}
+
+class _ListRequestDataState extends State<ListRequestData> {
+  late final TextEditingController _offerText;
+  final controller = RequestController.to;
+  @override
+  void initState() {
+    super.initState();
+    _offerText = TextEditingController();
   }
 
-  Widget _textInformation(text, color) {
-    return Text(
-      text,
-      style: TextStyle(
-        color: color,
-      ),
+  @override
+  void dispose() {
+    _offerText.dispose();
+    super.dispose();
+  }
+
+  acceptService(String idService) async {
+    AppDialogs.loading();
+    final response = await controller.acceptService(idService: idService);
+    Get.back();
+
+    if (response.isError) {
+      AppDialogs.information(description: response.error!);
+      return;
+    }
+    AppDialogs.information(description: "Servicio aceptado", isError: false);
+  }
+
+  offerService(String idService, double fee) async {
+    await AppDialogs.dialogGeneryPage(OfferWidget(offerText: _offerText, fee: fee), heigth: .3);
+    if (_offerText.text.isEmpty) {
+      Get.back();
+      return;
+    }
+
+    AppDialogs.loading();
+    final response = await controller.offerService(
+      idService: idService,
+      offerAmount: _offerText.text,
+    );
+    Get.back();
+    if (response.isError) {
+      AppDialogs.information(description: response.error!);
+      return;
+    }
+    AppDialogs.information(description: "Oferta realizada", isError: false);
+    _offerText.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: widget.data.length,
+      itemBuilder: (context, index) {
+        final service = widget.data[index];
+        return CardDetailService(
+          service: service,
+          acceptService: () => acceptService(service.id!),
+          offerService: () => offerService(service.id!, service.fee),
+        );
+      },
     );
   }
 }

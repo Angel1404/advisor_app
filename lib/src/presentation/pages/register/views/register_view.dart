@@ -1,5 +1,4 @@
 import 'package:advisor_app/src/presentation/presentation.dart';
-import 'package:flutter/material.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -41,83 +40,89 @@ class _RegisterViewState extends State<RegisterView> {
     super.dispose();
   }
 
-  void register() {
+  void register() async {
+    await AppDialogs.information(title: "Rol", description: "Si no escogiste un rol, por derecto será: Usuario");
+
     loading.value = true;
-    RegisterController.to
-        .register(
-            email: _emailController.text.trim(),
-            password: _passwordController.text)
-        .then((value) {
-      if (value != null && value.error != null) {
-        loading.value = false;
-        AppDialogs.information(title: "Error", description: value.error ?? "");
-      } else {
-        RegisterController.to
-            .addUser(
-          user: UserModelEntitie(
-            email: _emailController.text,
-            id: value?.data?.uid ?? "",
-            name: _nameController.text,
-            rol: isPro.value == false ? "Usuario" : "Profesional",
-            apells: _lastNameController.text,
-            phone: _phoneController.text.trim(),
-          ),
-        )
-            .then((addValue) {
-          if (addValue != "success") {
-            loading.value = false;
-            AppDialogs.information(title: "Error", description: addValue ?? "");
-          } else {
-            loading.value = false;
-            Get.offAndToNamed(Routes.HOMEVIEW);
-          }
-        });
-      }
-      loading.value = false;
-    });
+    final response = await RegisterController.to.register(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      isPro: isPro.value,
+      lastname: _lastNameController.text,
+      name: _nameController.text,
+      phone: _phoneController.text,
+    );
+    loading.value = false;
+
+    if (response.error != null) {
+      AppDialogs.information(title: "Error", description: response.error ?? "");
+      return;
+    }
+    Get.offAndToNamed(Routes.HOMEVIEW);
   }
+
+  final hidePassword = true.obs;
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => BodyTemplate(
+        backgroundColorSF: ColorApp.black,
+        backgroundColorAB: ColorApp.black,
+        colorIconBack: ColorApp.white,
+        colorTextAppBar: ColorApp.white,
         isScroll: true,
-        spacingTop: .05,
+        spacingTop: .03,
         heightBody: .73,
         child: Column(
           children: [
-            //LOGO
+            const LogoAppCard(),
             const SizedBox(height: 35),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: InputGenery(
-                            controller: _nameController, hintText: "Nombres"),
-                      ),
-                      const SizedBox(width: 8),
-                      Flexible(
-                        child: InputGenery(
-                            controller: _lastNameController,
-                            hintText: "Apellidos"),
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: InputGenery(
+                          colorTextInput: ColorApp.white,
+                          backgroundColor: ColorApp.white.withOpacity(.2),
+                          controller: _nameController,
+                          hintText: "Nombres"),
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: InputGenery(
+                          colorTextInput: ColorApp.white,
+                          backgroundColor: ColorApp.white.withOpacity(.2),
+                          controller: _lastNameController,
+                          hintText: "Apellidos"),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                InputGenery(hintText: "Teléfono", controller: _phoneController),
-                const SizedBox(height: 10),
-                InputGenery(controller: _emailController),
                 const SizedBox(height: 10),
                 InputGenery(
-                  hintText: "Contraseña",
-                  suixIcon: BtnVisualPassword(onValue: (value) {}),
-                  controller: _passwordController,
+                  colorTextInput: ColorApp.white,
+                  backgroundColor: ColorApp.white.withOpacity(.2),
+                  hintText: "Teléfono",
+                  controller: _phoneController,
+                  textInputType: TextInputType.number,
                 ),
+                const SizedBox(height: 10),
+                InputGenery(colorTextInput: ColorApp.white, backgroundColor: ColorApp.white.withOpacity(.2), controller: _emailController),
+                const SizedBox(height: 10),
+                Obx(() => InputGenery(
+                      colorTextInput: ColorApp.white,
+                      backgroundColor: ColorApp.white.withOpacity(.2),
+                      obscureText: hidePassword.value,
+                      hintText: "Contraseña",
+                      suixIcon: BtnVisualPassword(
+                        onValue: (value) {
+                          hidePassword.value = value;
+                        },
+                      ),
+                      controller: _passwordController,
+                    )),
                 const SizedBox(height: 10),
                 CheckTitle(
                   title: "Usuario",
@@ -141,7 +146,7 @@ class _RegisterViewState extends State<RegisterView> {
                 loading.value == true
                     ? const CircularProgressIndicator.adaptive()
                     : BtnApp(
-                        titleBtn: "Siguiente",
+                        titleBtn: "Crear cuenta",
                         onPressed: () {
                           register();
                         },

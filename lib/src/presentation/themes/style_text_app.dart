@@ -32,7 +32,7 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
   static const complementText = TextStyle(
-    color: ColorApp.black,
+    color: ColorApp.grey,
     fontSize: 14,
     fontWeight: FontWeight.normal,
   );

@@ -1,10 +1,12 @@
+import 'role_type_enum.dart';
+
 class UserModelEntitie {
   final String name;
   final String apells;
   final String email;
   final String id;
   final String phone;
-  final String rol;
+  final RoleType rol;
 
   UserModelEntitie({
     this.apells = '',
@@ -12,7 +14,7 @@ class UserModelEntitie {
     this.id = '',
     this.name = '',
     this.phone = '',
-    this.rol = '',
+    this.rol = RoleType.user,
   });
 
   factory UserModelEntitie.fromJson(Map<String, dynamic> json) {
@@ -22,7 +24,7 @@ class UserModelEntitie {
       name: json['name'] ?? '',
       apells: json['apells'] ?? '',
       phone: json['phone'] ?? '',
-      rol: json['rol'] ?? '',
+      rol: RoleType.strToRoleType(json['rol'] ?? ''),
     );
   }
 
@@ -33,7 +35,7 @@ class UserModelEntitie {
       'id': id,
       'name': name,
       'phone': phone,
-      'rol': rol,
+      'rol': rol.role,
     };
   }
 }

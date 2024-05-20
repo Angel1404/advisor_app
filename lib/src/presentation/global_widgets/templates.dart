@@ -13,6 +13,11 @@ class BodyTemplate extends StatelessWidget {
     this.isAppbar = true,
     this.spacingTop = .1,
     this.heightBody = .55,
+    this.paddingBody,
+    this.backgroundColorSF,
+    this.backgroundColorAB,
+    this.colorTextAppBar,
+    this.colorIconBack,
   });
   final Widget? child;
   final bool isScroll;
@@ -21,22 +26,30 @@ class BodyTemplate extends StatelessWidget {
   final bool isAppbar;
   final double spacingTop;
   final double heightBody;
+  final Color? backgroundColorSF, backgroundColorAB, colorTextAppBar, colorIconBack;
+  final EdgeInsetsGeometry? paddingBody;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: backgroundColorSF,
       appBar: isAppbar == false
           ? null
           : AppBar(
-              backgroundColor: ColorApp.background,
+              backgroundColor: backgroundColorAB ?? ColorApp.background,
               elevation: 0,
-              leading: IconBackAppbar(onPressed: onPressedAppBar),
+              leading: IconBackAppbar(
+                onPressed: onPressedAppBar,
+                colorIcon: colorIconBack,
+              ),
               title: AutoSizeTextApp(
-                  title: titleAppbar ?? "Crear cuenta",
-                  textStyle: StyleText.titleAppbar),
+                title: titleAppbar ?? "Crear cuenta",
+                textStyle: StyleText.titleAppbar.copyWith(color: colorTextAppBar),
+              ),
             ),
       body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 23),
+        padding: paddingBody,
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         height: size.height,
         width: size.width,
         child: isScroll
@@ -46,10 +59,7 @@ class BodyTemplate extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: size.height * spacingTop),
-                    SizedBox(
-                        width: double.maxFinite,
-                        height: size.height * heightBody,
-                        child: child),
+                    SizedBox(width: double.maxFinite, height: size.height * heightBody, child: child),
                   ],
                 ),
               )

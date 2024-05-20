@@ -13,7 +13,7 @@ class AppDialogs {
   }
 
   static Future information({
-    String title = "Error",
+    String title = "",
     String description = "",
     bool isError = true,
     String? titleBtn,
@@ -50,6 +50,7 @@ class AppDialogs {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
                         child: BtnApp(onPressed: onTap ?? () => Get.back(), titleBtn: titleBtn ?? "Ok"),
@@ -110,8 +111,8 @@ class AppDialogs {
         insetPadding: EdgeInsets.symmetric(horizontal: insetPaddingH, vertical: 24),
         children: [
           Container(
-            constraints: BoxConstraints(maxHeight: heigth ?? Get.height * .8),
-            height: heigth,
+            constraints: BoxConstraints(maxHeight: Get.height * (heigth ?? .8)),
+            height: Get.height * (heigth ?? .8),
             width: Get.width,
             child: page,
           ),

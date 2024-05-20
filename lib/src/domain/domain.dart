@@ -5,3 +5,6 @@ export 'package:advisor_app/src/infrastructure/services/firebase/db_service.dart
 export 'package:advisor_app/src/infrastructure/services/firebase/errors.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
+export 'models/service_pro_model.dart';
+export 'models/states_services_enum.dart';
+export 'models/role_type_enum.dart';

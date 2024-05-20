@@ -1,4 +1,9 @@
 export 'package:advisor_app/src/presentation/global_widgets/global_widgets.dart';
 export 'package:advisor_app/src/presentation/pages/home/home.dart';
-export 'package:advisor_app/src/presentation/pages/request/views/card_request_decoration.dart';
+export 'package:advisor_app/src/presentation/pages/request/widgets/card_request_decoration.dart';
 export 'package:flutter/material.dart';
+export 'widgets/text_information.dart';
+export 'widgets/card_detail_service.dart';
+export 'request_controller.dart';
+export 'widgets/offer_widget.dart';
+export 'views/list_request_data_content.dart';

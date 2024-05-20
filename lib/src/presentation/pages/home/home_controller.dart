@@ -10,19 +10,21 @@ class HomeViewController extends GetxController {
   RxBool loading = true.obs;
   final userData = UserModelEntitie().obs;
 
-  Future<String?> getUSerData() {
-    return usecase.firebaseDBService!
-        .getUserData(id: preferences.getUserId)
-        .then(
-      (value) {
-        loading.value = false;
-        if (value != null && value.error != null) {
-          return value.error;
-        } else {
-          userData.value = value!.data!;
-          return 'success';
-        }
-      },
-    );
+  Future getUSerData() async {
+    try {
+      loading.value = true;
+      final response = await usecase.firebaseDBService.getUserData(id: preferences.getUserId!);
+      if (response.isNotEmpty) {
+        final user = UserModelEntitie.fromJson(response);
+        userData.value = user;
+        preferences.setUserRole = user.rol.role;
+        preferences.setUserName = "${user.name} ${user.apells}";
+      }
+      loading.value = false;
+    } catch (e) {
+      loading.value = false;
+
+      debugPrint(e.toString());
+    }
   }
 }

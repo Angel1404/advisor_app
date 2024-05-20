@@ -56,8 +56,7 @@ class BtnAppOutline extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorApp.background,
         shape: RoundedRectangleBorder(
-          borderRadius:
-              isBorderRadius ? BorderRadius.circular(8) : BorderRadius.zero,
+          borderRadius: isBorderRadius ? BorderRadius.circular(8) : BorderRadius.zero,
           side: const BorderSide(color: ColorApp.blue),
         ),
       ),
@@ -82,16 +81,17 @@ class IconBackAppbar extends StatelessWidget {
   const IconBackAppbar({
     super.key,
     this.onPressed,
+    this.colorIcon,
   });
   final Function()? onPressed;
+  final Color? colorIcon;
   @override
   Widget build(BuildContext context) {
-    //TODO: Colocar navigatorBack si el onpressed es null ??
     return IconButton(
       onPressed: onPressed ?? () => Get.back(),
-      icon: const Icon(
+      icon: Icon(
         Icons.arrow_back_ios_outlined,
-        color: ColorApp.black,
+        color: colorIcon ?? ColorApp.black,
         size: 22,
       ),
     );

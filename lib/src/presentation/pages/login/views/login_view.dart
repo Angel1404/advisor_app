@@ -11,7 +11,7 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   RxBool loading = false.obs;
-  RxBool hidePassword = false.obs;
+  RxBool hidePassword = true.obs;
   @override
   void initState() {
     super.initState();
@@ -27,28 +27,22 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
-  void logIn() {
+  void logIn() async {
     loading.value = true;
-    LoginController.to
-        .login(
-            email: _emailController.text.trim(),
-            password: _passwordController.text)
-        .then((value) async {
-      await Future.delayed(const Duration(seconds: 2));
-      loading.value = false;
-      if (value != null && value.error != null) {
-        AppDialogs.information(title: "Error", description: value.error ?? "");
-      } else {
-        LocalPreferences().setUserId = value!.data!.uid;
-        Get.offAndToNamed(Routes.HOMEVIEW);
-      }
-    });
+    final response = await LoginController.to.login(email: _emailController.text.trim(), password: _passwordController.text);
+    loading.value = false;
+    if (response.error != null) {
+      AppDialogs.information(title: "Error", description: response.error ?? "");
+      return;
+    }
+    Get.offAndToNamed(Routes.HOMEVIEW);
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => BodyTemplate(
+        backgroundColorSF: ColorApp.black,
         isAppbar: false,
         isScroll: true,
         heightBody: .75,
@@ -57,11 +51,7 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 80,
-              width: 80,
-              child: Placeholder(),
-            ),
+            const LogoAppCard(),
             const SizedBox(height: 35),
             const Text(
               "Login",
@@ -70,9 +60,15 @@ class _LoginViewState extends State<LoginView> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InputGenery(controller: _emailController),
+                InputGenery(
+                  colorTextInput: ColorApp.white,
+                  controller: _emailController,
+                  backgroundColor: ColorApp.white.withOpacity(.2),
+                ),
                 const SizedBox(height: 10),
                 InputGenery(
+                  colorTextInput: ColorApp.white,
+                  backgroundColor: ColorApp.white.withOpacity(.2),
                   hintText: "Contraseña",
                   obscureText: hidePassword.value,
                   suixIcon: BtnVisualPassword(
@@ -82,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   controller: _passwordController,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 25),
                 loading.value == true
                     ? const CircularProgressIndicator.adaptive()
                     : BtnApp(

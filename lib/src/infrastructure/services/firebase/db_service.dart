@@ -1,26 +1,17 @@
 import 'package:advisor_app/src/domain/domain.dart';
+import 'package:get/get.dart';
 
 class FirebaseDBService {
+  static FirebaseDBService get to => Get.find<FirebaseDBService>();
+
   final users = FirebaseFirestore.instance.collection('users');
-  Future<GenericResponse<UserModelEntitie>?> getUserData({
-    required String id,
-  }) async {
+  Future<Map<String, dynamic>> getUserData({required String id}) async {
     try {
-      DocumentSnapshot snapshot = await users.doc(id).get();
-      if (snapshot.exists) {
-        UserModelEntitie userData = UserModelEntitie.fromJson(
-          snapshot.data() as Map<String, dynamic>,
-        );
-        return GenericResponse<UserModelEntitie>(data: userData);
-      } else {
-        return GenericResponse(
-          error: 'El usuario no fue encontrado.',
-        );
-      }
+      final snapshot = await users.doc(id).get();
+
+      return snapshot.data() ?? {};
     } catch (e) {
-      return GenericResponse<UserModelEntitie>(
-        error: 'Error al obtener los datos del usuario: $e',
-      );
+      throw e.toString();
     }
   }
 

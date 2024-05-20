@@ -6,9 +6,12 @@ part './app_routes.dart';
 abstract class AppPages {
   static final pages = [
     GetPage(
+      name: Routes.INITIAL,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
       name: Routes.LOGINVIEW,
       page: () => const LoginView(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: Routes.REGISTERVIEW,
@@ -18,6 +21,10 @@ abstract class AppPages {
       name: Routes.HOMEVIEW,
       binding: HomeBinding(),
       page: () => const HomeView(),
+    ),
+    GetPage(
+      name: Routes.HOMEVIEW,
+      page: () => const RequestView(),
     ),
   ];
 }

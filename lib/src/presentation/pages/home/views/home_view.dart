@@ -1,3 +1,4 @@
+import '../../../../domain/models/role_type_enum.dart';
 import '../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -12,14 +13,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     _homeController.preferences.logIn = true;
-    _homeController.getUSerData().then((value) {
-      if (value != "success") {
-        AppDialogs.information(
-            isError: true,
-            title: "Errror en obtener datos de usuario",
-            description: "$value");
-      }
-    });
+    _homeController.getUSerData();
     super.initState();
   }
 
@@ -27,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => _homeController.loading.value == true
+        () => _homeController.loading.value
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -35,7 +29,19 @@ class _HomeViewState extends State<HomeView> {
       ),
       drawer: HomeDrawer(),
       appBar: AppBar(
-        backgroundColor: ColorApp.background,
+        iconTheme: const IconThemeData(
+          color: ColorApp.white,
+        ),
+        backgroundColor: ColorApp.black,
+        centerTitle: true,
+        title: Obx(
+          () => _homeController.loading.value
+              ? const SizedBox()
+              : AutoSizeTextApp(
+                  textStyle: StyleText.titleAppbar.copyWith(color: ColorApp.white),
+                  title: _homeController.userData.value.rol == RoleType.user ? "Crear solicitud" : "Solicitudes",
+                ),
+        ),
       ),
     );
   }
@@ -43,11 +49,9 @@ class _HomeViewState extends State<HomeView> {
   _pages(index) {
     switch (index) {
       case 0:
-        return _homeController.userData.value.rol.toLowerCase() == "usuario"
-            ? const RequestView()
-            : const ProfileView();
+        return _homeController.userData.value.rol == RoleType.user ? const CreateServiceView() : const RequestView();
       case 1:
-        return const ProfileView();
+        return const CreateServiceView();
       case 2:
         return const RequestView();
     }

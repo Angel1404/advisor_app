@@ -6,6 +6,7 @@ class CardRequestDecoration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.maxFinite,
       margin: const EdgeInsets.symmetric(
         horizontal: 8,
         vertical: 12,

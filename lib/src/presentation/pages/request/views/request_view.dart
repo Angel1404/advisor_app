@@ -58,35 +58,3 @@ class TabbarRequest extends GetView<RequestController> {
     );
   }
 }
-// [
-//           if (controller.listServices.isNotEmpty) ...[
-//             ListRequestData(data: controller.listServices.value),
-//           ] else ...[
-//             const Center(
-//               child: AutoSizeTextApp(
-//                 title: "No hay solicitudes en este momento",
-//                 textStyle: StyleText.titleAppbar,
-//               ),
-//             ),
-//           ],
-//           if (controller.listServices.isNotEmpty) ...[
-//             ListRequestData(data: controller.listServices.value),
-//           ] else ...[
-//             const Center(
-//               child: AutoSizeTextApp(
-//                 title: "No hay solicitudes en este momento",
-//                 textStyle: StyleText.titleAppbar,
-//               ),
-//             ),
-//           ],
-//           if (controller.listServices.isNotEmpty) ...[
-//             ListRequestData(data: controller.listServices.value),
-//           ] else ...[
-//             const Center(
-//               child: AutoSizeTextApp(
-//                 title: "No hay solicitudes en este momento",
-//                 textStyle: StyleText.titleAppbar,
-//               ),
-//             ),
-//           ]
-//         ],

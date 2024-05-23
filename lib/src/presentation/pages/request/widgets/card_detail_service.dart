@@ -95,7 +95,7 @@ class CardDetailService extends StatelessWidget {
             InkWell(
               onTap: () {
                 openWhatsApp(
-                  phoneNumber: isUser ? service.phoneUser : service.phoneProfesional,
+                  phoneNumber: isUser ? service.phoneProfesional : service.phoneUser,
                 );
               },
               child: const Row(

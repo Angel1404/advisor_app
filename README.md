@@ -1,5 +1,9 @@
 # advisor_app
 
 creador: Angel Carvajal 
-semestre 8vo
-materia sistemas disrtibuidos
+
+
+semestre 8vo 
+
+
+materia sistemas distribuidos
